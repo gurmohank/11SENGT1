@@ -3,15 +3,16 @@ from PIL import Image
 
 #set some window properties
 app_home = ctk.CTk()
-app_home.title("Math Magic")  #window title
-app_home.geometry("700x400")  #set the window size
+app_home.title("Math Magic") #window title
 
-lightbg = ctk.CTkImage(Image.open("bg_light.png"), size=(600, 400))
+lightbg = "#f1e5d2"
+app_home.config(bg=lightbg)
 
-my_label = ctk.CTkLabel(app_home, text="", image=lightbg)
-my_label.pack(pady=10)
+bg1 = ctk.CTkImage(Image.open("bg_light.png"), size=(800, 600))
+lightbgimg = ctk.CTkLabel(app_home, text="", image=bg1)
+lightbgimg.pack()
 
-# Run the application
+#run the application
 app_home.mainloop()
 
 
