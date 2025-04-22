@@ -38,6 +38,16 @@ if appearance_mode == "light":
     cross_icon_image = "cross_icon_light.png"
     guide_char_image = "guide_character_light.png"
     speech_image = "speech_light.png"
+    ten_image = "ten_light.png"
+    nine_image = "nine_light.png"
+    eight_image = "eight_light.png"
+    seven_image = "seven_light.png"
+    six_image = "six_light.png"
+    five_image = "five_light.png"
+    four_image = "four_light.png"
+    three_image = "three_light.png"
+    two_image = "two_light.png"
+    one_image = "one_light.png"
 else:
     bg_colour = darkbg
     widget_bg_col = darkbg
@@ -49,6 +59,16 @@ else:
     cross_icon_image = "cross_icon_dark.png"
     guide_char_image = "guide_character_dark.png"
     speech_image = "speech_dark.png"
+    ten_image = "ten_dark.png"
+    nine_image = "nine_dark.png"
+    eight_image = "eight_dark.png"
+    seven_image = "seven_dark.png"
+    six_image = "six_dark.png"
+    five_image = "five_dark.png"
+    four_image = "four_dark.png"
+    three_image = "three_dark.png"
+    two_image = "two_dark.png"
+    one_image = "one_dark.png"
 
 #all images and icons used
 bg = ctk.CTkImage(Image.open(os.path.join(media_folder, bg_image)),size=(900, 700))
@@ -59,6 +79,17 @@ backicon = ctk.CTkImage(Image.open(os.path.join(media_folder,back_icon_image)), 
 crossicon = ctk.CTkImage(Image.open(os.path.join(media_folder,cross_icon_image)), size=(115,115))
 guidechar = ctk.CTkImage(Image.open(os.path.join(media_folder,guide_char_image)), size=(330,330))
 speech = ctk.CTkImage(Image.open(os.path.join(media_folder,speech_image)), size=(400,250))
+ten = ctk.CTkImage(Image.open(os.path.join(media_folder,ten_image)), size=(400,250))
+nine = ctk.CTkImage(Image.open(os.path.join(media_folder,nine_image)), size=(400,250))
+eight = ctk.CTkImage(Image.open(os.path.join(media_folder,eight_image)), size=(400,250))
+seven = ctk.CTkImage(Image.open(os.path.join(media_folder,seven_image)), size=(400,250))
+six = ctk.CTkImage(Image.open(os.path.join(media_folder,six_image)), size=(400,250))
+five = ctk.CTkImage(Image.open(os.path.join(media_folder,five_image)), size=(400,250))
+four = ctk.CTkImage(Image.open(os.path.join(media_folder,four_image)), size=(400,250))
+three = ctk.CTkImage(Image.open(os.path.join(media_folder,three_image)), size=(400,250))
+two = ctk.CTkImage(Image.open(os.path.join(media_folder,two_image)), size=(400,250))
+one = ctk.CTkImage(Image.open(os.path.join(media_folder,one_image)), size=(400,250))
+
 
 @app_home.route("/math_magic") #informs flask to run below function, displaying following web page
 def load_webpage():
@@ -134,7 +165,7 @@ class App(customtkinter.CTk):
                                     border_width=8,
                                     border_color=forest_green,
                                     hover_color=light_butter,
-                                    bg_color=widget_bg_col)
+                                    bg_color=widget_bg_col,)
         num_basic_mod.place(x=665, y=530)
 
         addition_mod = ctk.CTkButton(self, text="Addition",
@@ -146,7 +177,8 @@ class App(customtkinter.CTk):
                                     border_width=8,
                                     border_color=forest_green,
                                     hover_color=light_butter,
-                                    bg_color=widget_bg_col)
+                                    bg_color=widget_bg_col,
+                                    command=self.show_addition_page)
         addition_mod.place(x=915, y=530)
 
         subtraction_mod = ctk.CTkButton(self, text="Subtraction",
@@ -163,6 +195,47 @@ class App(customtkinter.CTk):
 
     def show_settings_page(self):
         self.clear_page()
+
+    def show_addition_page(self):
+        self.clear_page()
+
+        backicon_label = ctk.CTkLabel(self, text="", image=backicon, bg_color=widget_bg_col)
+        backicon_label.place(x=1250, y=0)
+
+        helpicon_label = ctk.CTkLabel(self, text="", image=helpicon, bg_color=widget_bg_col)
+        helpicon_label.place(x=1340, y=0)
+
+        number_stacker_a1 = ctk.CTkButton(self, text="Number Stacker",
+                                        font=ctk.CTkFont(family="Fredoka", size=24, weight="bold"), 
+                                        width=180, height=180,
+                                        corner_radius=45,
+                                        fg_color=pastel_green,
+                                        text_color=forest_green,
+                                        border_width=8,
+                                        border_color=forest_green,
+                                        hover_color=light_butter,
+                                        bg_color=widget_bg_col)
+        number_stacker_a1.place(x=450, y=500)
+
+        sort_the_mail_a2 = ctk.CTkButton(self, text="Sort the Mail",
+                                        font=ctk.CTkFont(family="Fredoka", size=24, weight="bold"), 
+                                        width=270, height=180,
+                                        corner_radius=45,
+                                        fg_color=pastel_green,
+                                        text_color=forest_green,
+                                        border_width=8,
+                                        border_color=forest_green,
+                                        hover_color=light_butter,
+                                        bg_color=widget_bg_col)
+        sort_the_mail_a2.place(x=750, y=500)
+
+    def show_number_stacker(self):
+        self.clear_page()
+
+        
+
+
+
 
 
 #all of the following runs the application
