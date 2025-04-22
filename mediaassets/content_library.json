@@ -1,0 +1,85 @@
+{
+    "activity 1": {
+        "activity 1": [
+            {"word": "One", "number": "1"},
+            {"word": "Two", "number": "2"},
+            {"word": "Three", "number": "3"},
+            {"word": "Four", "number": "4"},
+            {"word": "Five", "number": "5"},
+            {"word": "Six", "number": "6"},
+            {"word": "Seven", "number": "7"},
+            {"word": "Eight", "number": "8"},
+            {"word": "Nine", "number": "9"},
+            {"word": "Ten", "number": "10"},
+            {"word": "Eleven", "number": "11"},
+            {"word": "Twelve", "number": "12"},
+            {"word": "Thirteen", "number": "13"},
+            {"word": "Fourteen", "number": "14"},
+            {"word": "Fifteen", "number": "15"},
+            {"word": "Sixteen", "number": "16"},
+            {"word": "Seventeen", "number": "17"},
+            {"word": "Eighteen", "number": "18"},
+            {"word": "Nineteen", "number": "19"},
+            {"word": "Twenty", "number": "20"},
+            {"word": "Twenty-One", "number": "21"},
+            {"word": "Twenty-Two", "number": "22"},
+            {"word": "Twenty-Three", "number": "23"},
+            {"word": "Twenty-Four", "number": "24"},
+            {"word": "Twenty-Five", "number": "25"},
+            {"word": "Twenty-Six", "number": "26"},
+            {"word": "Twenty-Seven", "number": "27"},
+            {"word": "Twenty-Eight", "number": "28"},
+            {"word": "Twenty-Nine", "number": "29"},
+            {"word": "Thirty", "number": "30"}
+            ]
+      },
+
+
+    "activity_2": [
+
+    ],
+
+
+    "activity_3": [
+
+    ],
+
+
+    "not_quite": [
+            ["That was a great try, keep going!"],
+            ["You're doing awesome, just keep practicing!"],
+            ["Every attempt makes you better, keep it up!"],
+            ["You're getting closer, don't give up!"],
+            ["Mistakes are how we grow. You've got this!"],
+            ["You're learning and improving with every step!"],
+            ["Nice effort! Try again, you're on the right track!"],
+            ["Practice makes progress, keep shining!"],
+            ["Each try is a step forward. Stay positive!"],
+            ["Great effort, let's keep going!"],
+            ["You're making progress, keep it up!"],
+            ["Not quite, but you're doing great!"],
+            ["Nice effort! Keep practicing and you'll nail it!"],
+            ["You're so close! Let's try again!"],
+            ["Great persistence, you're improving every time!"]
+
+    ],
+    
+
+    "on_point": [
+        ["Fantastic work, you nailed it!"],
+        ["Spot on! You're doing amazing!"],
+        ["Right answer—keep the streak going!"],
+        ["Great job! You've mastered this one!"],
+        ["You're on fire! Keep up the awesome work!"],
+        ["Brilliant, you're a math wizard!"],
+        ["Perfect! Your hard work is paying off!"],
+        ["Well done, you've got this down!"],
+        ["Excellent! You're making incredible progress!"],
+        ["Amazing effort, it's right on point!"],
+        ["You crushed it, awesome work!"],
+        ["Bang on! You're doing fantastic!"],
+        ["Right on target, keep it up!"],
+        ["Absolutely spot champion!"],
+        ["You're unstoppable, fantastic answer!"]
+    ]
+}
