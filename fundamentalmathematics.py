@@ -1,5 +1,7 @@
 import customtkinter as ctk
 from PIL import Image
+from flask import Flask, render_template
+import threading
 
 #set some window properties
 app_home = ctk.CTk()
@@ -73,6 +75,11 @@ guidechar_label.place(x=-20, y=530)
 #placing speech bubble (home page)
 speech_label = ctk.CTkLabel(app_home, text="", image=speech, bg_color=widget_bg_col)
 speech_label.place(x=210, y=400)
+
+def clear_page(self):
+        for widget in self.winfo_children():
+            widget.destroy()
+
 
 #buttons for modules
 num_basic_mod = ctk.CTkButton(app_home, text="Number\nBasics", 
