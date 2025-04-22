@@ -3,6 +3,8 @@ import customtkinter as ctk #needed for function calls
 from PIL import Image
 from flask import Flask, render_template #'render_template' refers to built in flask function which helps display HTML content
 import threading
+import webbrowser
+import pyttsx3
 import os
 
 #initialises app and informs it that default folders (template and static) named have been modified to following
@@ -15,6 +17,8 @@ pastel_green = "#C8E6C9"
 forest_green = "#1B5E20"
 berry_pink = "#EC407A"
 light_butter = "#faf1b9"
+speech_light = "#fbf4e9"
+speech_dark = "#feb3e4"
 
 #folder where media is stores
 media_folder = "mediaassets/"  
@@ -56,7 +60,7 @@ crossicon = ctk.CTkImage(Image.open(os.path.join(media_folder,cross_icon_image))
 guidechar = ctk.CTkImage(Image.open(os.path.join(media_folder,guide_char_image)), size=(330,330))
 speech = ctk.CTkImage(Image.open(os.path.join(media_folder,speech_image)), size=(400,250))
 
-@app_home.route("/home") #informs flask to run below function, displaying following web page
+@app_home.route("/math_magic") #informs flask to run below function, displaying following web page
 def load_webpage():
      return render_template("web_fundamentalmathematics.html") #retrieves and displays the file contents
 
@@ -74,6 +78,15 @@ class App(customtkinter.CTk):
         self.show_home_page()
         self.web_thread = None
 
+    def clear_page(self):
+            for widget in self.winfo_children(): #gets list of all widgets (children) inside window (parent)
+                widget.destroy() #loop iterates through each widget and destroys it (removes it)
+
+    def open_web_app(self):
+        web_address = "http://127.0.0.1:5000/math_magic"
+        webbrowser.open_new_tab(web_address)
+        print(f"Opening {web_address} in your browser!")
+
 
     def show_home_page(self):
         #placing the background image (home page)
@@ -83,6 +96,8 @@ class App(customtkinter.CTk):
         #placing settings icon (home page)
         settingicon_label = ctk.CTkLabel(self, text="", image=settingicon, bg_color=widget_bg_col)
         settingicon_label.place(x=0, y=0)
+        settingicon_label.bind("<Button-1>", lambda event: self.show_settings_page())
+
 
         #placing help icon (home page)
         helpicon_label = ctk.CTkLabel(self, text="", image=helpicon, bg_color=widget_bg_col)
@@ -91,6 +106,9 @@ class App(customtkinter.CTk):
         #placing web launch icon (home page)
         launchicon_label = ctk.CTkLabel(self, text="", image=launchicon, bg_color=widget_bg_col)
         launchicon_label.place(x=1270, y=0)
+        #binds a left-click (represented as 'Button-1') to stated lambda function
+        #hence executing the function, transforming label into function of a button
+        launchicon_label.bind("<Button-1>", lambda event: self.open_web_app())
 
         #placing guide character (home page)
         guidechar_label = ctk.CTkLabel(self, text="", image=guidechar, bg_color=widget_bg_col)
@@ -99,6 +117,12 @@ class App(customtkinter.CTk):
         #placing speech bubble (home page)
         speech_label = ctk.CTkLabel(self, text="", image=speech, bg_color=widget_bg_col)
         speech_label.place(x=210, y=400)
+        speech_text_label = ctk.CTkLabel(self, text="Hello there! Welcome to Math Magic. \nPick an option to get started!",
+                                         font=ctk.CTkFont(family="Nunito", size=19),
+                                         text_color=darkbg,
+                                         width=55, height=70,
+                                         fg_color=speech_light)
+        speech_text_label.place(x=250, y=470)
 
         #buttons for modules
         num_basic_mod = ctk.CTkButton(self, text="Number\nBasics", 
@@ -137,12 +161,8 @@ class App(customtkinter.CTk):
                                         bg_color=widget_bg_col)
         subtraction_mod.place(x=1165, y=530)
 
-    def clear_page(self):
-            for widget in self.winfo_children(): #gets list of all widgets (children) inside window (parent)
-                widget.destroy() #loop iterates through each widget and destroys it (removes it)
-
-
-    
+    def show_settings_page(self):
+        self.clear_page()
 
 
 #all of the following runs the application
@@ -168,9 +188,3 @@ if __name__ == "__main__":
 
     #begins GUI event loop (keeps app running until user closes it)
     app.mainloop()
-
-
-
-
-
-
