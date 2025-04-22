@@ -1,0 +1,6 @@
+#to install all necessary modules, if not already installed, run:
+#pip install -r app_requirements.txt
+
+customtkinter
+Pillow
+Flask

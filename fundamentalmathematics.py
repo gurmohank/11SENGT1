@@ -1,13 +1,11 @@
 import customtkinter #needed for class definition
 import customtkinter as ctk #needed for function calls
 from PIL import Image
-from flask import Flask, render_template
+from flask import Flask, render_template #'render_template' refers to built in flask function which helps display HTML content
 import threading
 import os
-import sys
-print(sys.executable)
 
-#initialises app and informs it that default folder named have been modified to following
+#initialises app and informs it that default folders (template and static) named have been modified to following
 app_home = Flask(__name__, template_folder="weblaunch", static_folder="mediaassets") #window title
 
 #specific colours
@@ -65,12 +63,12 @@ def load_webpage():
 #creates python gui window, where #content inside this class directly controls functions and appearance of the gui
 class App(customtkinter.CTk):
     
-
-    # 'self' makes sure this class can track its own attributes and functions
+    #'__init__' is a built-in function used to initialise a class
+    #'self' makes sure this class can track its own attributes and functions
     def __init__(self):
         super().__init__() #makes sure the app functions as a CTK window and is properly set up before any customisations
         self.title("Math Magic")
-        self.geometry("600x500")
+        self.geometry("1200x800")
         self.configure(fg_color=bg_colour)
         self.current_page = "main"
         self.show_home_page()
@@ -140,8 +138,8 @@ class App(customtkinter.CTk):
         subtraction_mod.place(x=1165, y=530)
 
     def clear_page(self):
-            for widget in self.winfo_children():
-                widget.destroy()
+            for widget in self.winfo_children(): #gets list of all widgets (children) inside window (parent)
+                widget.destroy() #loop iterates through each widget and destroys it (removes it)
 
 
     
