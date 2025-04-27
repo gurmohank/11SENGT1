@@ -257,77 +257,71 @@ class App(customtkinter.CTk):
                                          fg_color=speech_light)
         speech_text_label.place(x=200, y=510)
 
+        #dictionary to store og-positions for images to reset
         self.start_positions = {}
-            
+
+        def drag_start(event):
+            widget = event.widget  # Get the widget that triggered the event
+            # Save the relative position of the click inside the widget
+            widget.start_x = event.x
+            widget.start_y = event.y
+            widget.lift()
+
+        def drag_motion(event):
+            widget = event.widget  # Get the widget that triggered the event
+            # Calculate new positions relative to the cursor movement
+            x = widget.winfo_x() + (event.x - widget.start_x)
+            y = widget.winfo_y() + (event.y - widget.start_y)
+
+            widget.place(x=x, y=y)
+
+
         #placing all numbers
         ten_label = ctk.CTkLabel(self, text="", image=ten, bg_color=widget_bg_col)
         ten_label.place(x=30, y=20)
-        self.start_positions[ten_label] = (30, 20)
-        self.add_dragging(ten_label)
+        ten_label.bind("<Button-1>", drag_start)
+        ten_label.bind("<B1-Motion>", drag_motion)
 
 
         nine_label = ctk.CTkLabel(self, text="", image=nine, bg_color=widget_bg_col)
         nine_label.place(x=360, y=20)
-        self.start_positions[nine_label] = (360, 20)
-        self.add_dragging(nine_label)
-
-
+        nine_label.bind("<Button-1>", drag_start)
+        nine_label.bind("<B1-Motion>", drag_motion)
+        
         eight_label = ctk.CTkLabel(self, text="", image=eight, bg_color=widget_bg_col)
         eight_label.place(x=660, y=20)
-        self.start_positions[eight_label] = (660, 20)
-        self.add_dragging(eight_label)
-
-
+        
         seven_label = ctk.CTkLabel(self, text="", image=seven, bg_color=widget_bg_col)
         seven_label.place(x=960, y=20)
-        self.start_positions[seven_label] = (960, 20)
-        self.add_dragging(seven_label)
-
-
+    
         six_label = ctk.CTkLabel(self, text="", image=six, bg_color=widget_bg_col)
         six_label.place(x=1140, y=250)
-        self.start_positions[six_label] = (1140, 250)
-        self.add_dragging(six_label)
-
 
         five_label = ctk.CTkLabel(self, text="", image=five, bg_color=widget_bg_col)
         five_label.place(x=845, y=285)
-        self.start_positions[five_label] = (845, 285)
-        self.add_dragging(five_label)
-
 
         four_label = ctk.CTkLabel(self, text="", image=four, bg_color=widget_bg_col)
         four_label.place(x=550, y=315)
-        self.start_positions[four_label] = (550, 310)
-        self.add_dragging(four_label)
-
 
         three_label = ctk.CTkLabel(self, text="", image=three, bg_color=widget_bg_col)
         three_label.place(x=255, y=345)
-        self.start_positions[three_label] = (255, 345)
-        self.add_dragging(three_label)
-
 
         two_label = ctk.CTkLabel(self, text="", image=two, bg_color=widget_bg_col)
         two_label.place(x=-40, y=345)
-        self.start_positions[two_label] = (-40, 345)
-        self.add_dragging(two_label)
-
 
         one_label = ctk.CTkLabel(self, text="", image=one, bg_color=widget_bg_col)
         one_label.place(x=-40, y=410)
-        self.start_positions[one_label] = (-40, 410)
-        self.add_dragging(one_label)
 
+        def reset_pos(start_positions):
+            for label, (x, y) in start_positions.items():
+                label.place(x=x, y=y)
 
-        def add_dragging(self, label):
-            def start_drag(event):
-                self.dragged_item = label
+        reset_pos_button = ctk.CTkButton(self, text = "Reset", command= reset_pos)
+        reset_pos_button.place(x=600, y=700)
 
-
-
-        num_canvas = ctk.CTkCanvas(self, width=1000, height=800, bg=opp_bg)
-        num_canvas.place(x=1500, y=930)
+        #canvas set up
+        num_canvas = ctk.CTkCanvas(self, width=1200, height=800, bg=opp_bg)
+        num_canvas.place(x=1250, y=930)
         
         def draw_vertical_line(event=None):
             canvas_width = num_canvas.winfo_width()
