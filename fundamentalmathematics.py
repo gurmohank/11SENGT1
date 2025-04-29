@@ -1,3 +1,4 @@
+import tkinter as tk
 import customtkinter #needed for class definition
 import customtkinter as ctk #needed for function calls
 from PIL import Image, ImageTk
@@ -240,17 +241,21 @@ class App(customtkinter.CTk):
     def show_number_stacker_page(self):
         self.clear_page()
 
-        backicon_label = ctk.CTkLabel(self, text="", image=backicon, bg_color=widget_bg_col)
+        #main frame covering whole page
+        main_frame = tk.Frame(self, bg=bg_colour)
+        main_frame.pack(fill=tk.BOTH, expand=True)
+
+        backicon_label = ctk.CTkLabel(main_frame, text="", image=backicon, bg_color=widget_bg_col)
         backicon_label.place(x=1340, y=-10)
 
         #placing guide character (number stacker page)
-        guidechar_label = ctk.CTkLabel(self, text="", image=resized_guidechar, bg_color=widget_bg_col)
+        guidechar_label = ctk.CTkLabel(main_frame, text="", image=resized_guidechar, bg_color=widget_bg_col)
         guidechar_label.place(x=-10, y=630)
 
         #speech label (number stacker page)
-        speech_label = ctk.CTkLabel(self, text="", image=speech, bg_color=widget_bg_col)
+        speech_label = ctk.CTkLabel(main_frame, text="", image=speech, bg_color=widget_bg_col)
         speech_label.place(x=150, y=450)
-        speech_text_label = ctk.CTkLabel(self, text="Drag and drop different\nnumbers into the box.\nExplore how different numbers add\ntogether to give you bigger numbers!",
+        speech_text_label = ctk.CTkLabel(main_frame, text="Drag and drop different\nnumbers into the box.\nExplore how different numbers add\ntogether to give you bigger numbers!",
                                          font=ctk.CTkFont(family="Nunito", size=19),
                                          text_color=darkbg,
                                          width=55, height=70,
@@ -272,55 +277,101 @@ class App(customtkinter.CTk):
             # Calculate new positions relative to the cursor movement
             x = widget.winfo_x() + (event.x - widget.start_x)
             y = widget.winfo_y() + (event.y - widget.start_y)
-
             widget.place(x=x, y=y)
+
+        self.ten_tkv = ImageTk.PhotoImage(Image.open(os.path.join(media_folder, ten_image)).convert("RGB").resize((435, 450)))        
+        self.nine_tkv = ImageTk.PhotoImage(Image.open(os.path.join(media_folder, nine_image)).convert("RGB").resize((435, 405)))
+        self.eight_tkv = ImageTk.PhotoImage(Image.open(os.path.join(media_folder, eight_image)).convert("RGB").resize((435, 360)))
+        self.seven_tkv = ImageTk.PhotoImage(Image.open(os.path.join(media_folder, seven_image)).convert("RGB").resize((435, 315)))
+        self.six_tkv = ImageTk.PhotoImage(Image.open(os.path.join(media_folder, six_image)).convert("RGB").resize((435, 270)))
+        self.five_tkv = ImageTk.PhotoImage(Image.open(os.path.join(media_folder, five_image)).convert("RGB").resize((435, 225)))
+        self.four_tkv = ImageTk.PhotoImage(Image.open(os.path.join(media_folder, four_image)).convert("RGB").resize((435, 180)))
+        self.three_tkv = ImageTk.PhotoImage(Image.open(os.path.join(media_folder, three_image)).convert("RGB").resize((435, 135)))
+        self.two_tkv = ImageTk.PhotoImage(Image.open(os.path.join(media_folder, two_image)).convert("RGB").resize((435, 90)))
+        self.one_tkv = ImageTk.PhotoImage(Image.open(os.path.join(media_folder, one_image)).convert("RGB").resize((435, 45)))
+        
 
 
         #placing all numbers
-        ten_label = ctk.CTkLabel(self, text="", image=ten, bg_color=widget_bg_col)
+        ten_label = tk.Label(main_frame, text="", image=self.ten_tkv)
         ten_label.place(x=30, y=20)
         ten_label.bind("<Button-1>", drag_start)
         ten_label.bind("<B1-Motion>", drag_motion)
+        self.start_positions[ten_label] = (30, 20)  # add the label and its original position to dictionary
 
 
-        nine_label = ctk.CTkLabel(self, text="", image=nine, bg_color=widget_bg_col)
+        nine_label = tk.Label(main_frame, text="", image=self.nine_tkv)
         nine_label.place(x=360, y=20)
         nine_label.bind("<Button-1>", drag_start)
         nine_label.bind("<B1-Motion>", drag_motion)
+        self.start_positions[nine_label] = (360, 20)  # add the label and its original position to dictionary
+
         
-        eight_label = ctk.CTkLabel(self, text="", image=eight, bg_color=widget_bg_col)
+        eight_label = tk.Label(main_frame, text="", image=self.eight_tkv)
         eight_label.place(x=660, y=20)
+        eight_label.bind("<Button-1>", drag_start)
+        eight_label.bind("<B1-Motion>", drag_motion)
+        self.start_positions[eight_label] = (660, 20)  # add the label and its original position to dictionary
+
         
-        seven_label = ctk.CTkLabel(self, text="", image=seven, bg_color=widget_bg_col)
+        seven_label = tk.Label(main_frame, text="", image=self.seven_tkv)
         seven_label.place(x=960, y=20)
+        seven_label.bind("<Button-1>", drag_start)
+        seven_label.bind("<B1-Motion>", drag_motion)
+        self.start_positions[seven_label] = (960, 20)  # add the label and its original position to dictionary
+
     
-        six_label = ctk.CTkLabel(self, text="", image=six, bg_color=widget_bg_col)
+        six_label = tk.Label(main_frame, text="", image=self.six_tkv)
         six_label.place(x=1140, y=250)
+        six_label.bind("<Button-1>", drag_start)
+        six_label.bind("<B1-Motion>", drag_motion)
+        self.start_positions[six_label] = (1140, 20)  # add the label and its original position to dictionary
 
-        five_label = ctk.CTkLabel(self, text="", image=five, bg_color=widget_bg_col)
+
+        five_label = tk.Label(main_frame, text="", image=self.five_tkv)
         five_label.place(x=845, y=285)
+        five_label.bind("<Button-1>", drag_start)
+        five_label.bind("<B1-Motion>", drag_motion)
+        self.start_positions[five_label] = (845, 285)  # add the label and its original position to dictionary
 
-        four_label = ctk.CTkLabel(self, text="", image=four, bg_color=widget_bg_col)
+
+        four_label = tk.Label(main_frame, text="", image=self.four_tkv)
         four_label.place(x=550, y=315)
+        four_label.bind("<Button-1>", drag_start)
+        four_label.bind("<B1-Motion>", drag_motion)
+        self.start_positions[four_label] = (550, 315)  # add the label and its original position to dictionary
 
-        three_label = ctk.CTkLabel(self, text="", image=three, bg_color=widget_bg_col)
+
+        three_label = tk.Label(main_frame, text="", image=self.three_tkv)
         three_label.place(x=255, y=345)
+        three_label.bind("<Button-1>", drag_start)
+        three_label.bind("<B1-Motion>", drag_motion)
+        self.start_positions[three_label] = (225, 345)  # add the label and its original position to dictionary
 
-        two_label = ctk.CTkLabel(self, text="", image=two, bg_color=widget_bg_col)
+
+        two_label = tk.Label(main_frame, text="", image=self.two_tkv)
         two_label.place(x=-40, y=345)
+        two_label.bind("<Button-1>", drag_start)
+        two_label.bind("<B1-Motion>", drag_motion)
+        self.start_positions[two_label] = (-40, 345)  # add the label and its original position to dictionary
 
-        one_label = ctk.CTkLabel(self, text="", image=one, bg_color=widget_bg_col)
+
+        one_label = tk.Label(main_frame, text="", image=self.one_tkv)
         one_label.place(x=-40, y=410)
+        one_label.bind("<Button-1>", drag_start)
+        one_label.bind("<B1-Motion>", drag_motion)
+        self.start_positions[one_label] = (-40, 410)  # add the label and its original position to dictionary
+
 
         def reset_pos(start_positions):
             for label, (x, y) in start_positions.items():
                 label.place(x=x, y=y)
 
-        reset_pos_button = ctk.CTkButton(self, text = "Reset", command= reset_pos)
+        reset_pos_button = ctk.CTkButton(main_frame, text="Reset", command=lambda: reset_pos(self.start_positions))        
         reset_pos_button.place(x=600, y=700)
 
         #canvas set up
-        num_canvas = ctk.CTkCanvas(self, width=1200, height=800, bg=opp_bg)
+        num_canvas = ctk.CTkCanvas(main_frame, width=905, height=455, bg=opp_bg)
         num_canvas.place(x=1250, y=930)
         
         def draw_vertical_line(event=None):
@@ -330,20 +381,6 @@ class App(customtkinter.CTk):
             num_canvas.create_line(middle_x, 0, middle_x, canvas_height, fill="black", width=2)
 
         num_canvas.bind("<Configure>", draw_vertical_line)
-
-
-
-
-       
-
-
-
-
-
-
-
-
-
 
 
 
