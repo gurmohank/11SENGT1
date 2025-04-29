@@ -121,7 +121,12 @@ class App(customtkinter.CTk):
         webbrowser.open_new_tab(web_address)
         print(f"Opening {web_address} in your browser!")
 
-    
+    def back_page(self):
+        self.clear_page()
+        if self.page_status == "home":
+            self.show_home_page()
+        elif self.page_status == "add":
+            self.show_addition_page()
 
     def show_home_page(self):
         #placing the background image (home page)
@@ -199,12 +204,16 @@ class App(customtkinter.CTk):
 
     def show_settings_page(self):
         self.clear_page()
+        self.page_status = "home"
 
     def show_addition_page(self):
         self.clear_page()
+        self.page_status = "home"
 
         backicon_label = ctk.CTkLabel(self, text="", image=backicon, bg_color=widget_bg_col)
         backicon_label.place(x=1250, y=-10)
+        backicon_label.bind("<Button-1>", lambda event: self.back_page())
+
 
         helpicon_label = ctk.CTkLabel(self, text="", image=helpicon, bg_color=widget_bg_col)
         helpicon_label.place(x=1340, y=0)
@@ -224,22 +233,11 @@ class App(customtkinter.CTk):
                                         hover_color=light_butter,
                                         bg_color=widget_bg_col,
                                         command=self.show_number_stacker_page)
-        number_stacker_a1.place(x=450, y=500)
-
-        sort_the_mail_a2 = ctk.CTkButton(self, text="Sort the Mail",
-                                        font=ctk.CTkFont(family="Fredoka", size=24, weight="bold"), 
-                                        width=270, height=180,
-                                        corner_radius=45,
-                                        fg_color=pastel_green,
-                                        text_color=forest_green,
-                                        border_width=8,
-                                        border_color=forest_green,
-                                        hover_color=light_butter,
-                                        bg_color=widget_bg_col)
-        sort_the_mail_a2.place(x=750, y=500)
+        number_stacker_a1.place(x=600, y=500)
 
     def show_number_stacker_page(self):
         self.clear_page()
+        self.page_status = "add"
 
         #main frame covering whole page
         main_frame = tk.Frame(self, bg=bg_colour)
@@ -247,6 +245,7 @@ class App(customtkinter.CTk):
 
         backicon_label = ctk.CTkLabel(main_frame, text="", image=backicon, bg_color=widget_bg_col)
         backicon_label.place(x=1340, y=-10)
+        backicon_label.bind("<Button-1>", lambda event: self.back_page())
 
         #placing guide character (number stacker page)
         guidechar_label = ctk.CTkLabel(main_frame, text="", image=resized_guidechar, bg_color=widget_bg_col)
@@ -294,85 +293,95 @@ class App(customtkinter.CTk):
 
         #placing all numbers
         ten_label = tk.Label(main_frame, text="", image=self.ten_tkv)
-        ten_label.place(x=30, y=20)
+        ten_label.place(x=250, y=150)
         ten_label.bind("<Button-1>", drag_start)
         ten_label.bind("<B1-Motion>", drag_motion)
-        self.start_positions[ten_label] = (30, 20)  # add the label and its original position to dictionary
+        self.start_positions[ten_label] = (250, 150)  # add the label and its original position to dictionary
 
 
         nine_label = tk.Label(main_frame, text="", image=self.nine_tkv)
-        nine_label.place(x=360, y=20)
+        nine_label.place(x=715, y=150)
         nine_label.bind("<Button-1>", drag_start)
         nine_label.bind("<B1-Motion>", drag_motion)
-        self.start_positions[nine_label] = (360, 20)  # add the label and its original position to dictionary
+        self.start_positions[nine_label] = (715, 150)  # add the label and its original position to dictionary
 
         
         eight_label = tk.Label(main_frame, text="", image=self.eight_tkv)
-        eight_label.place(x=660, y=20)
+        eight_label.place(x=1180, y=150)
         eight_label.bind("<Button-1>", drag_start)
         eight_label.bind("<B1-Motion>", drag_motion)
-        self.start_positions[eight_label] = (660, 20)  # add the label and its original position to dictionary
+        self.start_positions[eight_label] = (1180, 150)  # add the label and its original position to dictionary
 
         
         seven_label = tk.Label(main_frame, text="", image=self.seven_tkv)
-        seven_label.place(x=960, y=20)
+        seven_label.place(x=1645, y=150)
         seven_label.bind("<Button-1>", drag_start)
         seven_label.bind("<B1-Motion>", drag_motion)
-        self.start_positions[seven_label] = (960, 20)  # add the label and its original position to dictionary
+        self.start_positions[seven_label] = (1645, 150)  # add the label and its original position to dictionary
 
     
         six_label = tk.Label(main_frame, text="", image=self.six_tkv)
-        six_label.place(x=1140, y=250)
+        six_label.place(x=2110, y=150)
         six_label.bind("<Button-1>", drag_start)
         six_label.bind("<B1-Motion>", drag_motion)
-        self.start_positions[six_label] = (1140, 20)  # add the label and its original position to dictionary
+        self.start_positions[six_label] = (2110, 150)  # add the label and its original position to dictionary
 
 
         five_label = tk.Label(main_frame, text="", image=self.five_tkv)
-        five_label.place(x=845, y=285)
+        five_label.place(x=2110, y=440)
         five_label.bind("<Button-1>", drag_start)
         five_label.bind("<B1-Motion>", drag_motion)
-        self.start_positions[five_label] = (845, 285)  # add the label and its original position to dictionary
+        self.start_positions[five_label] = (2110, 440)  # add the label and its original position to dictionary
 
 
         four_label = tk.Label(main_frame, text="", image=self.four_tkv)
-        four_label.place(x=550, y=315)
+        four_label.place(x=1645, y=485)
         four_label.bind("<Button-1>", drag_start)
         four_label.bind("<B1-Motion>", drag_motion)
-        self.start_positions[four_label] = (550, 315)  # add the label and its original position to dictionary
+        self.start_positions[four_label] = (1645, 485)  # add the label and its original position to dictionary
 
 
         three_label = tk.Label(main_frame, text="", image=self.three_tkv)
-        three_label.place(x=255, y=345)
+        three_label.place(x=1180, y=530)
         three_label.bind("<Button-1>", drag_start)
         three_label.bind("<B1-Motion>", drag_motion)
-        self.start_positions[three_label] = (225, 345)  # add the label and its original position to dictionary
+        self.start_positions[three_label] = (1180, 530)  # add the label and its original position to dictionary
 
 
         two_label = tk.Label(main_frame, text="", image=self.two_tkv)
-        two_label.place(x=-40, y=345)
+        two_label.place(x=715, y=575)
         two_label.bind("<Button-1>", drag_start)
         two_label.bind("<B1-Motion>", drag_motion)
-        self.start_positions[two_label] = (-40, 345)  # add the label and its original position to dictionary
+        self.start_positions[two_label] = (715, 575)  # add the label and its original position to dictionary
 
 
         one_label = tk.Label(main_frame, text="", image=self.one_tkv)
-        one_label.place(x=-40, y=410)
+        one_label.place(x=250, y=620)
         one_label.bind("<Button-1>", drag_start)
         one_label.bind("<B1-Motion>", drag_motion)
-        self.start_positions[one_label] = (-40, 410)  # add the label and its original position to dictionary
+        self.start_positions[one_label] = (250, 620)  # add the label and its original position to dictionary
+        
 
 
         def reset_pos(start_positions):
             for label, (x, y) in start_positions.items():
                 label.place(x=x, y=y)
 
-        reset_pos_button = ctk.CTkButton(main_frame, text="Reset", command=lambda: reset_pos(self.start_positions))        
-        reset_pos_button.place(x=600, y=700)
+        reset_pos_button = ctk.CTkButton(main_frame, text="Reset", 
+                                         font=ctk.CTkFont(family="Fredoka", size=24, weight="bold"), 
+                                        width=180, height=90,
+                                        corner_radius=45,
+                                        fg_color=pastel_green,
+                                        text_color=forest_green,
+                                        border_width=8,
+                                        border_color=forest_green,
+                                        hover_color=light_butter,
+                                        bg_color=widget_bg_col,command=lambda: reset_pos(self.start_positions))        
+        reset_pos_button.place(x=860, y=730)
 
         #canvas set up
         num_canvas = ctk.CTkCanvas(main_frame, width=905, height=455, bg=opp_bg)
-        num_canvas.place(x=1250, y=930)
+        num_canvas.place(x=1450, y=930)
         
         def draw_vertical_line(event=None):
             canvas_width = num_canvas.winfo_width()
@@ -407,3 +416,6 @@ if __name__ == "__main__":
 
     #begins GUI event loop (keeps app running until user closes it)
     app.mainloop()
+
+
+    
