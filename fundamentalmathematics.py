@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import *
 import customtkinter #needed for class definition
 import customtkinter as ctk #needed for function calls
 from PIL import Image, ImageTk
@@ -7,6 +8,12 @@ import threading
 import webbrowser
 import pyttsx3
 import os
+import subprocess
+import platform
+import json
+import random
+
+
 
 #initialises app and informs it that default folders (template and static) named have been modified to following
 app_home = Flask(__name__, template_folder="weblaunch", static_folder="mediaassets") #window title
@@ -127,8 +134,25 @@ class App(customtkinter.CTk):
             self.show_home_page()
         elif self.page_status == "add":
             self.show_addition_page()
+        elif self.page_status == "num":
+            self.show_number_basics_page()
+        elif self.page_status == "sub":
+            self.show_subtraction_page()
+
+    def cross_page(self):
+        self.clear_page()
+        if self.page_on == "home":
+            self.show_home_page()
+        elif self.page_on == "add":
+            self.show_addition_page()
+        elif self.page_on == "num":
+            self.show_number_basics_page()
+        elif self.page_on == "sub":
+            self.show_subtraction_page()
 
     def show_home_page(self):
+        self.page_on = "home"
+
         #placing the background image (home page)
         lightbg_label = ctk.CTkLabel(self, text="", image=bg)
         lightbg_label.place(x=300, y=-100)
@@ -142,6 +166,8 @@ class App(customtkinter.CTk):
         #placing help icon (home page)
         helpicon_label = ctk.CTkLabel(self, text="", image=helpicon, bg_color=widget_bg_col)
         helpicon_label.place(x=1340, y=0)
+        helpicon_label.bind("<Button-1>", lambda event: self.show_help_page())
+
 
         #placing web launch icon (home page)
         launchicon_label = ctk.CTkLabel(self, text="", image=launchicon, bg_color=widget_bg_col)
@@ -174,7 +200,8 @@ class App(customtkinter.CTk):
                                     border_width=8,
                                     border_color=forest_green,
                                     hover_color=light_butter,
-                                    bg_color=widget_bg_col,)
+                                    bg_color=widget_bg_col,
+                                    command=self.show_number_basics_page)
         num_basic_mod.place(x=665, y=530)
 
         addition_mod = ctk.CTkButton(self, text="Addition",
@@ -199,15 +226,242 @@ class App(customtkinter.CTk):
                                         border_width=8,
                                         border_color=forest_green,
                                         hover_color=light_butter,
-                                        bg_color=widget_bg_col)
+                                        bg_color=widget_bg_col,
+                                        command=self.show_subtraction_page)
         subtraction_mod.place(x=1165, y=530)
 
     def show_settings_page(self):
         self.clear_page()
         self.page_status = "home"
 
+        backicon_label = ctk.CTkLabel(self, text="", image=backicon, bg_color=widget_bg_col)
+        backicon_label.place(x=1340, y=-10)
+        backicon_label.bind("<Button-1>", lambda event: self.back_page())
+
+
+
+
+    def show_help_page(self):
+        self.clear_page()
+        self.page_status = "home"
+
+        crossicon_label = ctk.CTkLabel(self, text="", image=crossicon, bg_color=widget_bg_col)
+        crossicon_label.place(x=1340, y=-10)
+        crossicon_label.bind("<Button-1>", lambda event: self.cross_page())
+
+        info_label = ctk.CTkLabel(self, 
+                                  text="Hi there! Welcome to the Math Magic Help section! " 
+                                  "This is where you can learn\nhow to use the app and have the best time exploring math. "
+                                  "Here's what you need to know",
+                                  font=ctk.CTkFont(family="Nunito", size=23),
+                                       text_color=opp_bg)
+        info_label.place(x=250, y=100)
+
+        home_info_label = ctk.CTkLabel(self, text="Home Page:\nStart here! It's like your magic map."
+                                       "Click the buttons to go to different math adventures."
+                                       "\nWant to learn about numbers, addition, or subtraction? Pick a module and jump right in!",
+                                       font=ctk.CTkFont(family="Nunito", size=23),
+                                       text_color=opp_bg,
+                                       justify = "left")
+        home_info_label.place(x=250, y=200)
+                                      
+        modules_info_label = ctk.CTkLabel(self, text="Modules:\n\n Each modules is packed with cool stuff:"
+                                          "\n - Videos: Watch fun and exciting videos to learn new things."
+                                          "\n - Activities: Play games and solve puzzles to level up your math skills!"
+                                          "\n - Back Button: Oops, need to go back? No problem! "
+                                          "The back button lets you return to the last page you were on.")
+        modules_info_label.place(x=250, y=300)
+
+
+        lets_go_label = ctk.CTkLabel(self, text= "Remember, if you ever need help, just come back to this page."
+                                     "\nReady to become a Math Magic superstar? Let's go!")
+
+        lets_go_label.place(x=800, y=00)
+#\n\n- Modules:\n- Each module is packed with cool stuff:\n - Videos: 
+# Watch fun and exciting videos to learn new things.\n - **Games and Challenges**: Play 
+# games and solve puzzles to level up your math skills!\n - Choose your favorite activity and 
+# have lots of fun learning.\n\nBack Button:\n - Oops, need to go back? No problem! The 
+# back button lets you return to the last page you were on.\n - It’s super easy—click 
+# it to go back to the home page or the module you were just in!\n\nThis app is all about 
+# having fun while you learn. If you ever need help, just come back to this page.
+
+
+    def show_number_basics_page(self):
+        self.clear_page()
+
+        self.page_on = "num"
+        self.page_status = "home"
+
+        backicon_label = ctk.CTkLabel(self, text="", image=backicon, bg_color=widget_bg_col)
+        backicon_label.place(x=1250, y=-10)
+        backicon_label.bind("<Button-1>", lambda event: self.back_page())
+
+
+        helpicon_label = ctk.CTkLabel(self, text="", image=helpicon, bg_color=widget_bg_col)
+        helpicon_label.place(x=1340, y=0)
+
+        #placing guide character (home page)
+        guidechar_label = ctk.CTkLabel(self, text="", image=guidechar, bg_color=widget_bg_col)
+        guidechar_label.place(x=-20, y=530)
+
+        number_video_a1 = ctk.CTkButton(self, text="Video: Numbers 1 to 30",
+                                        font=ctk.CTkFont(family="Fredoka", size=24, weight="bold"), 
+                                        width=180, height=180,
+                                        corner_radius=45,
+                                        fg_color=pastel_green,
+                                        text_color=forest_green,
+                                        border_width=8,
+                                        border_color=forest_green,
+                                        hover_color=light_butter,
+                                        bg_color=widget_bg_col,
+                                        command=self.show_number_video)
+        number_video_a1.place(x=350, y=350)
+
+        number_match_a2 = ctk.CTkButton(self, text="Match the Number!",
+                                        font=ctk.CTkFont(family="Fredoka", size=24, weight="bold"), 
+                                        width=180, height=180,
+                                        corner_radius=45,
+                                        fg_color=pastel_green,
+                                        text_color=forest_green,
+                                        border_width=8,
+                                        border_color=forest_green,
+                                        hover_color=light_butter,
+                                        bg_color=widget_bg_col,
+                                        command=self.show_number_match)
+        number_match_a2.place(x=750, y=350)
+
+    def show_number_video(self):
+        current_dir = os.path.dirname(os.path.abspath(__file__))  #identifies directory of the script
+        video_path = os.path.join(current_dir, "mediaassets", "number_basics_video.mp4")  #establishes relative path
+        # Check the operating system
+        if platform.system() == "Windows":
+            print(f"Video path being used: {video_path}")
+            os.startfile(video_path)  #opens on default media player - windows
+        elif platform.system() == "Darwin": 
+            subprocess.call(["open", video_path])  #opens on default media player - macOS 
+        elif platform.system() == "Linux":  
+            subprocess.call(["xdg-open", video_path])  #opens on default media player - linux
+        else:
+            print("Unsupported OS. Cannot open the video file.")        
+        
+
+    def show_number_match(self):
+        self.clear_page()
+
+        backicon_label = ctk.CTkLabel(self, text="", image=backicon, bg_color=widget_bg_col)
+        backicon_label.place(x=1340, y=-10)
+        backicon_label.bind("<Button-1>", lambda event: self.back_page())
+
+        self.number_match_quiz("mediaassets/content_library.json")
+
+
+    def number_match_quiz(self, json_file):
+        # Back icon setup
+        backicon_label = ctk.CTkLabel(self, text="", image=backicon, bg_color=widget_bg_col)
+        backicon_label.place(x=1340, y=-10)
+        backicon_label.bind("<Button-1>", lambda event: self.back_page())
+
+        # Load JSON data
+        with open(json_file, "r") as file:
+            content = json.load(file)
+
+        # Select questions and affirmations
+        selected_questions = random.sample(content["activity_1"][1:], 6)  # Skip the "a1_instructions" entry
+        correct_affirmations = random.sample(content["on_point"], 6)
+        incorrect_affirmations = random.sample(content["not_quite"], 6)
+
+        score = 0
+        question_index = 0
+        all_options = []
+
+        # Question label setup
+        question_label = ctk.CTkLabel(self, text="", font=("Arial", 18), wraplength=600)
+        question_label.pack(pady=20)
+
+        # Radio buttons setup
+        radio_var = tk.IntVar()
+        radio_buttons = [
+            ctk.CTkRadioButton(self, text="", variable=radio_var, value=i, font=("Arial", 14))
+            for i in range(3)
+        ]
+        for rb in radio_buttons:
+            rb.pack(anchor="w", padx=20)
+
+        # Feedback label
+        feedback_label = ctk.CTkLabel(self, text="", font=("Arial", 12), fg_color="blue")
+        feedback_label.pack(pady=10)
+
+        # Check and Next buttons
+        check_button = ctk.CTkButton(self, text="Check", command=lambda: validate_answer())
+        check_button.pack(pady=10)
+
+        next_button = ctk.CTkButton(self, text="Next", state="disabled", command=lambda: next_question())
+        next_button.pack(pady=10)
+
+        def display_question():
+            nonlocal question_index, all_options
+
+            if question_index >= len(selected_questions):
+                question_label.configure(text=f"Quiz Complete! Your score: {score}/{len(selected_questions)}")
+                check_button.pack_forget()
+                next_button.pack_forget()
+                for rb in radio_buttons:
+                    rb.pack_forget()
+                return
+
+            # Prepare current question
+            question_data = selected_questions[question_index]
+            question_label.configure(
+                text=f"Match the number for: {question_data['word']}"
+            )
+
+            all_options = [question_data["number"]] + question_data["options"]
+            random.shuffle(all_options)
+
+            for i, option in enumerate(all_options):
+                radio_buttons[i].configure(text=option, state="normal")
+
+            radio_var.set(-1)
+            feedback_label.configure(text="")
+            check_button.configure(state="normal")
+            next_button.configure(state="disabled")
+
+        def validate_answer():
+            nonlocal score, all_options
+
+            selected_index = radio_var.get()
+
+            if selected_index == -1:
+                feedback_label.configure(text="Please select an option!", fg_color="red")
+                return
+
+            correct_option = selected_questions[question_index]["number"]
+
+            if all_options[selected_index] == correct_option:
+                score += 1
+                affirmation = random.choice(correct_affirmations)
+                feedback_label.configure(text=f"Correct! {affirmation}", fg_color="green")
+            else:
+                feedback = random.choice(incorrect_affirmations)
+                feedback_label.configure(
+                    text=f"Incorrect! {feedback} The correct answer was {correct_option}.",
+                    fg_color="red",
+                )
+
+            check_button.configure(state="disabled")
+            next_button.configure(state="normal")
+
+        def next_question():
+            nonlocal question_index
+            question_index += 1
+            display_question()
+
+        display_question()
+
     def show_addition_page(self):
         self.clear_page()
+
+        self.page_on = "add"
         self.page_status = "home"
 
         backicon_label = ctk.CTkLabel(self, text="", image=backicon, bg_color=widget_bg_col)
@@ -233,7 +487,7 @@ class App(customtkinter.CTk):
                                         hover_color=light_butter,
                                         bg_color=widget_bg_col,
                                         command=self.show_number_stacker_page)
-        number_stacker_a1.place(x=600, y=500)
+        number_stacker_a1.place(x=600, y=350)
 
     def show_number_stacker_page(self):
         self.clear_page()
@@ -289,7 +543,6 @@ class App(customtkinter.CTk):
         self.two_tkv = ImageTk.PhotoImage(Image.open(os.path.join(media_folder, two_image)).convert("RGB").resize((435, 90)))
         self.one_tkv = ImageTk.PhotoImage(Image.open(os.path.join(media_folder, one_image)).convert("RGB").resize((435, 45)))
         
-
 
         #placing all numbers
         ten_label = tk.Label(main_frame, text="", image=self.ten_tkv)
@@ -362,7 +615,6 @@ class App(customtkinter.CTk):
         self.start_positions[one_label] = (250, 620)  # add the label and its original position to dictionary
         
 
-
         def reset_pos(start_positions):
             for label, (x, y) in start_positions.items():
                 label.place(x=x, y=y)
@@ -391,6 +643,173 @@ class App(customtkinter.CTk):
 
         num_canvas.bind("<Configure>", draw_vertical_line)
 
+    def show_subtraction_page(self):
+        self.clear_page()
+
+        self.page_status == "sub"
+        self.page_status = "home"
+
+        backicon_label = ctk.CTkLabel(self, text="", image=backicon, bg_color=widget_bg_col)
+        backicon_label.place(x=1250, y=-10)
+        backicon_label.bind("<Button-1>", lambda event: self.back_page())
+
+
+        helpicon_label = ctk.CTkLabel(self, text="", image=helpicon, bg_color=widget_bg_col)
+        helpicon_label.place(x=1340, y=0)
+
+        #placing guide character (home page)
+        guidechar_label = ctk.CTkLabel(self, text="", image=guidechar, bg_color=widget_bg_col)
+        guidechar_label.place(x=-20, y=530)
+
+        subtraction_video_a1 = ctk.CTkButton(self, text="Video: Subtraction with Dinosaurs",
+                                        font=ctk.CTkFont(family="Fredoka", size=24, weight="bold"), 
+                                        width=180, height=180,
+                                        corner_radius=45,
+                                        fg_color=pastel_green,
+                                        text_color=forest_green,
+                                        border_width=8,
+                                        border_color=forest_green,
+                                        hover_color=light_butter,
+                                        bg_color=widget_bg_col,
+                                        command=self.show_subtraction_video)
+        subtraction_video_a1.place(x=300, y=350)
+
+        take_away_a1 = ctk.CTkButton(self, text="Take some away!",
+                                        font=ctk.CTkFont(family="Fredoka", size=24, weight="bold"), 
+                                        width=180, height=180,
+                                        corner_radius=45,
+                                        fg_color=pastel_green,
+                                        text_color=forest_green,
+                                        border_width=8,
+                                        border_color=forest_green,
+                                        hover_color=light_butter,
+                                        bg_color=widget_bg_col,
+                                        command=self.show_take_away)
+        take_away_a1.place(x=800, y=350)
+
+
+    def show_subtraction_video(self):
+        current_dir = os.path.dirname(os.path.abspath(__file__))  #identifies directory of the script
+        video_path = os.path.join(current_dir, "mediaassets", "subtraction_video.mp4")  #establishes relative path
+        # Check the operating system
+        if platform.system() == "Windows":
+            print(f"Video path being used: {video_path}")
+            os.startfile(video_path)  #opens on default media player - windows
+        elif platform.system() == "Darwin": 
+            subprocess.call(["open", video_path])  #opens on default media player - macOS 
+        elif platform.system() == "Linux":  
+            subprocess.call(["xdg-open", video_path])  #opens on default media player - linux
+        else:
+            print("Unsupported OS. Cannot open the video file.") 
+
+    def show_take_away(self):
+        self.clear_page()
+
+        self.page_status = "sub"
+
+        backicon_label = ctk.CTkLabel(self, text="", image=backicon, bg_color=widget_bg_col)
+        backicon_label.place(x=1340, y=-10)
+        backicon_label.bind("<Button-1>", lambda event: self.back_page())
+
+        self.take_away_quiz("mediaassets/content_library.json")
+
+    def take_away_quiz(self, json_file):
+        with open(json_file, "r") as file:
+            content = json.load(file)
+
+        selected_questions = random.sample(content["activity_3"], 6)
+        correct_affirmations = random.sample(content["on_point"], 6)
+        incorrect_affirmations = random.sample(content["not_quite"], 6)
+
+        score = 0
+        question_index = 0
+
+        # Declare all_options within the take_away_quiz scope
+        all_options = []
+
+        self.clear_page()
+
+        question_label = ctk.CTkLabel(self, text="", font=("Arial", 18), wraplength=600)
+        question_label.pack(pady=20)
+
+        radio_var = tk.IntVar()
+        radio_buttons = [
+            ctk.CTkRadioButton(self, text="", variable=radio_var, value=i, font=("Arial", 14))
+            for i in range(3)
+        ]
+        for rb in radio_buttons:
+            rb.pack(anchor="w", padx=20)
+
+        feedback_label = ctk.CTkLabel(self, text="", font=("Arial", 12), fg_color="blue")
+        feedback_label.pack(pady=10)
+
+        check_button = ctk.CTkButton(self, text="Check", command=lambda: validate_answer())
+        check_button.pack(pady=10)
+
+        next_button = ctk.CTkButton(self, text="Next", state="disabled", command=lambda: next_question())
+        next_button.pack(pady=10)
+
+        def display_question():
+            nonlocal question_index, all_options
+
+            backicon_label = ctk.CTkLabel(self, text="", image=backicon, bg_color=widget_bg_col)
+            backicon_label.place(x=1340, y=-10)
+            backicon_label.bind("<Button-1>", lambda event: self.back_page())
+
+            if question_index >= len(selected_questions):
+                feedback_label.configure(text="")
+                question_label.configure(text=f"Quiz Complete! Your score: {score}/{len(selected_questions)}")
+                check_button.pack_forget()
+                next_button.pack_forget()
+                for rb in radio_buttons:
+                    rb.pack_forget()
+                return
+
+            question_data = selected_questions[question_index]
+            question_label.configure(text=f"Q{question_index + 1}: {question_data['question']}")
+
+            all_options = [question_data["answer"]] + question_data["options"]
+            random.shuffle(all_options)
+
+            for i, option in enumerate(all_options):
+                radio_buttons[i].configure(text=option, state="normal")
+
+            radio_var.set(-1)
+            feedback_label.configure(text="")
+            check_button.configure(state="normal")
+            next_button.configure(state="disabled")
+
+        def validate_answer():
+            nonlocal score, all_options
+
+            selected_index = radio_var.get()
+
+            if selected_index == -1:
+                feedback_label.configure(text="Please select an option!", fg_color="red")
+                return
+
+            correct_option = selected_questions[question_index]["answer"]
+
+            if all_options[selected_index] == correct_option:
+                score += 1
+                affirmation = random.choice(correct_affirmations)
+                feedback_label.configure(text=f"Correct! {affirmation}", fg_color="green")
+            else:
+                feedback = random.choice(incorrect_affirmations)
+                feedback_label.configure(
+                    text=f"Incorrect! {feedback} The correct answer was {correct_option}.",
+                    fg_color="red",
+                )
+
+            check_button.configure(state="disabled")
+            next_button.configure(state="normal")
+
+        def next_question():
+            nonlocal question_index
+            question_index += 1
+            display_question()
+
+        display_question()
 
 
 #all of the following runs the application
