@@ -4,4 +4,4 @@
 customtkinter
 Pillow
 Flask
-pyttsx3
+googletrans
